@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+.animated-text {
+    font-size: 24px;
+    color: #333;
+    animation: fadeIn 2s infinite;
+}
+
+@keyframes fadeIn {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}

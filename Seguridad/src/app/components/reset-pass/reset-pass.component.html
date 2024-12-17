@@ -1,0 +1,39 @@
+<div *ngIf="permissions?.perm_access == 'N' || !permissions">
+    <app-no-access></app-no-access>
+</div>
+
+<div class="container mt-4" *ngIf="permissions?.perm_access == 'Y'">
+    <div class="table-users">
+        <div class="card-body">
+
+            <app-success *ngIf="messageSuccess" [successMessage]="messageSuccess" (close)="closeAlert()"></app-success>
+
+            <app-error *ngIf="messageError" [errorMessage]="messageError" (close)="closeAlert()"></app-error>
+            
+            <div class="formu">
+                <div class="container text-center m-1">
+                    <div class="w-50">
+                        <h4>Restablecer Contraseña</h4>
+                    </div>
+                </div>
+                <form #resetPass="ngForm" (ngSubmit)="resetPass.form.valid && onSave()" autocomplete="off">
+                    <div class="w-50 m-auto form-user mt-4 mb-5">
+                        <div class="form-group py-2">
+                            <label for="passNew">Nueva Contraseña</label>
+                            <input type="password" name="passNew" class="form-control" [(ngModel)]="passNew" required
+                                minlength="5" placeholder="Contraseña">
+                            <label for="confirmPass">Confirmar Contraseña</label>
+                            <input type="password" name="confirmPass" class="form-control" [(ngModel)]="confirmPass"
+                                required minlength="5" placeholder="Contraseña">
+                        </div>
+
+                        <div class="footer m-3">
+                            <button type="submit" class="btn mx-1 btn-primary"
+                                [disabled]=" resetPass.form.invalid">Confirmar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

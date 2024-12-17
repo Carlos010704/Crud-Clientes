@@ -1,0 +1,63 @@
+<div *ngIf="permissions?.perm_access == 'N' || !permissions">
+    <app-no-access></app-no-access>
+</div>
+
+<div class="d-flex" *ngIf="permissions?.perm_access == 'Y'">
+    <div class="container mt-4">
+        <div class="table-users">
+            <div class="card-body">
+                <app-success *ngIf="successMessage" [successMessage]="successMessage"
+                    (close)="closeAlert()"></app-success>
+                <app-error *ngIf="errorMessage" [errorMessage]="errorMessage" (close)="closeAlert()"></app-error>
+                <div>
+                    <h4>Lista de Usuarios</h4>
+
+
+                    <div class="text-center mb-3 btn-top">
+                        <button type="submit" class="btn btn-dark m-1" (click)="guardarCambios(this.viewPermissions)"
+                            *ngIf="permissions?.perm_insert == 'Y'">Guardar Cambios</button>
+                    </div>
+
+                    <div class="container-table-users">
+                        <table class="table table-dark table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col"></th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Permisos</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="text-center">
+                                <tr *ngFor="let perm of viewPermissions">
+                                    <th></th>
+                                    <td><label for="nameView">{{perm.name_view}}</label></td>
+                                    <td>
+                                        <div id="checklist">
+                                            <input id="01" type="checkbox" name="r" value="1"
+                                                [checked]="perm.perm_access === 'Y'" [(ngModel)]="perm.perm_access">
+                                            <label for="01">Acceder</label>
+                                            <input id="02" type="checkbox" name="r" value="2"
+                                                [checked]="perm.perm_insert === 'Y'" [(ngModel)]="perm.perm_insert">
+                                            <label for="02">Crear</label>
+                                            <input id="03" type="checkbox" name="r" value="3"
+                                                [checked]="perm.perm_update === 'Y'" [(ngModel)]="perm.perm_update">
+                                            <label for="03">Actualizar</label>
+                                            <input id="04" type="checkbox" name="r" value="4"
+                                                [checked]="perm.perm_delete === 'Y'" [(ngModel)]="perm.perm_delete">
+                                            <label for="04">Eliminar</label>
+                                            <input id="05" type="checkbox" name="r" value="5"
+                                                [checked]="perm.perm_admin === 'Y'" [(ngModel)]="perm.perm_admin">
+                                            <label for="05">Administrtador</label>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

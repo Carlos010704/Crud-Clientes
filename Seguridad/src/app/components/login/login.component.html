@@ -1,0 +1,85 @@
+<body id="login-container">
+    <!-- <div class="section"> -->
+        <div class="container">
+            <div class="row full-height justify-content-center">
+                <div class="col-12 text-center align-self-center py-5">
+                    <div class="section pb-5 pt-5 pt-sm-2 text-center">
+
+                        <!-- ERROR DE INICIO DE SESION -->
+                        <app-error-login *ngIf="loginMessageError" [errorMessage]="loginMessageError"
+                            (close)="closeAlert()"></app-error-login>
+
+                        <!-- CORREO ENVIADO -->
+                        <app-success-login *ngIf="mailMessageSuccess" [successMessage]="mailMessageSuccess"
+                            (close)="closeAlert()"></app-success-login>
+
+                        <!-- CORREO NO ENVIADO -->
+                        <app-error-login *ngIf="mailMessageError" [errorMessage]="mailMessageError"
+                            (close)="closeAlert()"></app-error-login>
+
+                        <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                        <label for="reg-log"></label>
+                        <div class="card-3d-wrap mx-auto">
+                            <div class="card-3d-wrapper">
+                                <div class="card-front">
+                                    <div class="center-wrap">
+                                        <form class="section text-center" #loginForm="ngForm" (ngSubmit)="onLogin()"
+                                            autocomplete="off">
+                                            <h4 class="mb-4 pb-3"> INICIAR SESIÓN</h4>
+                                            <div class="form-group">
+                                                <input type="email" name="correo" [(ngModel)]="mail" class="form-style"
+                                                    placeholder="Correo" autocomplete="off">
+                                                <i class="input-icon uil uil-user"></i>
+                                                <!-- <i class="fa fa-user"></i> -->
+
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="password" name="password" [(ngModel)]="password"
+                                                    class="form-style" placeholder="Contraseña" autocomplete="off">
+                                                <i class="input-icon uil uil-lock-alt"></i>
+                                            </div>
+                                            <button type="submit" class="btn mt-4">iniciar sesión</button>
+                                            <input class="checkbox" type="checkbox" name="reg-log" />
+                                            <label for="reg-log">
+                                                <p class="mb-0 mt-4 text-center"><a class="link" id="reg-log"
+                                                        (click)="cleanMail()" name="reg-log" for="reg-log">Olvidó su
+                                                        contraseña?</a></p>
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="center-wrap">
+                                        <form class="section text-center" #resetForm="ngForm"
+                                            (ngSubmit)="resetForm.form.valid && resetPass()">
+                                            <h4 class="mb-4 pb-3">RECUPERAR CONTRASEÑA</h4>
+                                            <div>
+                                                <input class="checkbox" type="checkbox" name="reg-log" />
+                                                <label for="reg-log">
+                                                    <p class="mb-0 mt-4 text-center">
+                                                        <a (click)="cleanMail()" class="link" id="reg-log"
+                                                            name="reg-log" for="reg-log"><i
+                                                                class="uil uil-previous icon-back"></i></a>
+                                                    </p>
+                                                </label>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <input type="email" name="resEmail" class="form-style"
+                                                    placeholder="Correo" id="logemail" [(ngModel)]="mail"
+                                                    autocomplete="off"
+                                                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required>
+                                                <i class="input-icon uil uil-at"></i>
+                                            </div>
+                                            <button class="btn mt-4" type="submit"
+                                                [disabled]="this.resetForm.form.invalid">Enviar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+</body>

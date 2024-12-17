@@ -1,0 +1,78 @@
+<div *ngIf="permissions?.perm_access == 'N' || !permissions">
+    <app-no-access></app-no-access>
+</div>
+
+<div class="d-flex" *ngIf="permissions?.perm_access == 'Y'">
+    <div class="container mt-4">
+        <div class="table-users">
+            <div class="card-body">
+
+
+                <div class="formu">
+                    <div class="container text-center m-1">
+                        <div class="w-50">
+                            <h4>{{title}}</h4>
+                        </div>
+                    </div>
+                    <form #userForm="ngForm" (ngSubmit)=" userForm.form.valid && save() " autocomplete="off">
+                        <div class="w-50 m-auto form-user">
+                            <div class="form-group py-2">
+                                <label for="login">Nombre</label>
+                                <input type="text" name="name" #name="ngModel" [(ngModel)]="usuario.name"
+                                    class="form-control" required minlength="3" placeholder="Login">
+
+                                <div *ngIf="name.touched && !name.value" class="text-danger">Campo obligatorio</div>
+                            </div>
+                            <div class="form-group py-2">
+                                <label for="email">Correo</label>
+                                <input type="email" name="email" #email="ngModel" [(ngModel)]="usuario.email"
+                                    class="form-control" required minlength="8"
+                                    pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" placeholder="Correo">
+
+                                <div *ngIf="email.touched && !email.value" class="text-danger">Campo obligatorio</div>
+                                <div *ngIf="email.value && email.invalid" class="text-danger">Debe ingresar un correo valido</div>
+                            </div>
+                            <div class="form-switch input-active mb-3" *ngIf="this.modoEdicion && permissions?.perm_admin == 'Y'">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                    name="change" #change="ngModel" [(ngModel)]="changeToPass" (click)="changePass()">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Cambiar Contraseña</label>
+                            </div>
+                            <div class="form-group py-2" *ngIf="this.modoEdicion && permissions?.perm_admin == 'Y' && changeToPass == true">
+                                <label for="pass">Contraseña</label>
+                                <input type="password" name="pass" #pass="ngModel" [(ngModel)]="usuario.password"
+                                    class="form-control" required minlength="5" placeholder="Contraseña" [value]="shortPass">
+
+                                <div *ngIf="pass.touched && pass.value.length < 5" class="text-danger">La contraseña
+                                    debe contener minimo 5 caracteres</div>
+                            </div>
+                            <div class="form-switch input-active">
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
+                                    name="active" #active="ngModel" [(ngModel)]="usuario.status">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Activo</label>
+                            </div>
+                            <div>
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Grupo</label>
+                                <select class="form-select" name="rol" required #rol="ngModel"
+                                    [(ngModel)]="usuario.rol">
+                                    <option selected hidden>{{ this.modoEdicion ? usuario.rol : '-- Seleccione un Grupo --'}}</option>
+                                    <option *ngFor="let rol of roles" [ngValue]="rol.id" required>{{rol.description}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="rol.touched && usuario.rol === '-- Seleccione un Grupo --'"
+                                    class="text-danger">Seleccione
+                                    un grupo válido</div>
+                            </div>
+
+                            <div class="footer m-3">
+                                <button class="btn btn-dark mx-1" (click)="goBack()">Volver</button>
+                                <button type="submit" class="btn mx-1 btn-primary"
+                                    [disabled]="userForm.form.invalid || usuario.rol === '-- Seleccione un Grupo --'">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

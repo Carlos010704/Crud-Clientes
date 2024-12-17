@@ -1,0 +1,8 @@
+<div *ngIf="permissions?.perm_access == 'N' || !permissions">
+    <app-no-access></app-no-access>
+</div>
+
+<div class="container" *ngIf="permissions?.perm_access == 'Y'">
+    <div class="animated-text">Plataforma Polaris</div>
+    <!-- <app-no-access></app-no-access> -->
+</div>

@@ -1,0 +1,58 @@
+<div *ngIf="permissions?.perm_access == 'N' || !permissions">
+    <app-no-access></app-no-access>
+</div>
+
+<div class="d-flex" *ngIf="permissions?.perm_access == 'Y'">
+    <div class="container mt-4">
+        <div class="table-users">
+            <div class="card-body">
+                <app-success *ngIf="successMessage" [successMessage]="successMessage" (close)="closeAlert()"></app-success>
+                <app-error *ngIf="errorMessage" [errorMessage]="errorMessage" (close)="closeAlert()"></app-error>
+                <div>
+                    <h4>Lista de Usuarios</h4>
+
+                    <div class="text-center mb-3 btn-top">
+                        <button class="btn btn-dark m-1" routerLink="/menu/userForm" *ngIf="permissions?.perm_insert == 'Y'">Nuevo</button>
+                    </div>
+
+                    <div class="container-table-users">
+                        <table class="table table-dark table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col"></th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Correo</th>
+                                    <th scope="col">Activo</th>
+                                </tr>
+                            </thead>
+
+                            <tbody class="text-center">
+                                <tr *ngFor="let usuario of usuarios">
+                                    <th>
+
+                                        <swal #deleteSwal title="¿Desea eliminar el registro?" icon="question"
+                                            [showCancelButton]="true" confirmButtonText="Aceptar"
+                                            (confirm)="eliminar(usuario.id)" confirmButtonColor="#198754"
+                                            cancelButtonColor="#dc3545">
+                                        </swal>
+
+                                        <a [routerLink]="['/menu/userForm']"
+                                            [queryParams]="{id: usuario.id, modoEdicion: true}" *ngIf="permissions?.perm_update == 'Y'">
+                                            <i class="fa-sharp fa-light fa-pen-to-square m-1" style="color: white;"></i>
+                                        </a>
+                                        <a [swal]="deleteSwal" *ngIf="permissions?.perm_delete == 'Y'">
+                                            <i class="fa-sharp fa-light fa-trash m-1" style="color: #ff0000;"></i>
+                                        </a>
+                                    </th>
+                                    <td>{{usuario.name}}</td>
+                                    <td>{{usuario.email}}</td>
+                                    <td>{{usuario.status == 1 ? 'SI' : 'NO'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

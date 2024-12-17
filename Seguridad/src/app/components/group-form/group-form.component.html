@@ -1,0 +1,32 @@
+<div *ngIf="permissions?.perm_access == 'N' || !permissions">
+    <app-no-access></app-no-access>
+</div>
+
+<div class="d-flex" *ngIf="permissions?.perm_access == 'Y'">
+<div class="container mt-4">
+    <div class="table-users">
+        <div class="card-body">
+            <div class="formu">
+                <div class="container text-center m-1">
+                    <div class="w-50">
+                        <h4>{{title}}</h4>
+                    </div>
+                </div>
+                <form #groupForm="ngForm" (ngSubmit)="groupForm.form.valid && onSave()" autocomplete="off">
+                    <div class="w-50 m-auto form-user mt-4 mb-5 p-1">
+                        <div class="form-group py-2">
+                            <label for="description">Deescripción</label>
+                            <input type="text" name="description" #description="ngModel" [(ngModel)]="desc" class="form-control" required minlength="2">
+                        </div>
+
+                        <div class="footer m-3">
+                            <button class="btn btn-dark mx-1" (click)="goBack()">Volver</button>
+                            <button type="submit" class="btn mx-1 btn-primary" [disabled]="groupForm.invalid">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
